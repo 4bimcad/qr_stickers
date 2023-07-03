@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Получение данных пользователя</title>
+  <script>
+    function displayUserData(userData) {
+      // Отобразить данные пользователя на странице
+      var userDataContainer = document.getElementById('userDataContainer');
+      var html = '<h2>Данные пользователя:</h2>';
+      html += '<p>Имя: ' + userData.name + '</p>';
+      html += '<p>Телефон: ' + userData.phone + '</p>';
+      html += '<p>Email: ' + userData.email + '</p>';
+      userDataContainer.innerHTML = html;
+    }
+
+    function getUserData() {
+      var email = document.getElementById('emailInput').value;
+      if (email) {
+        google.script.run.withSuccessHandler(displayUserData).withUserObject(this).findUserData(email, 'https://script.google.com/macros/s/AKfycbz-k_-4X3jutCkF8CvLDr9DUYbzsl6kHakFhlFyhnccMk7t0wz80lD-sDD4ytwcnZbqIQ/exec');
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Получение данных пользователя</h1>
+  <label for="emailInput">Введите адрес электронной почты:</label>
+  <input type="email" id="emailInput" required>
+  <button onclick="getUserData()">Показать данные</button>
+  <div id="userDataContainer"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Обработка нажатия клавиши "Enter" при вводе email
+      $('#emailInput').on('keyup', function(event) {
+        if (event.keyCode === 13) {
+          getUserData();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
